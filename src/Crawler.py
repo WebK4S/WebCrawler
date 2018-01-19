@@ -18,9 +18,11 @@ class HREFParser(HTMLParser):
             if dict_attrs == 'href':
                 self.hrefs.add(dict_attrs['href'])
                 """add to dictionary all tags <a href>"""
-""" 
 
-"""
+    def get_links(html, domain):
+        hrefs = set()
+        parser = HTMLParser
+        parser.feed(html)
 class Crawler_SQLite:
 
     hrefs = set()
