@@ -6,12 +6,24 @@ import HTMLParser
 from urllib import parse
 
 class HREFParser(HTMLParser):
-    """
-    Extracting hrefs
-    """
-class Crawler:
 
-    href = set()
+
+    """
+    Extracting hrefs from prvided url
+    """
+    hrefs = set()
+    def starttag(self, tag, attrs):
+        if tag =='a':
+            dict_attrs = dict(attrs)
+            if dict_attrs == 'href':
+                self.hrefs.add(dict_attrs['href'])
+                """add to dictionary all tags <a href>"""
+""" 
+
+"""
+class Crawler_SQLite:
+
+    hrefs = set()
     html = ''
 
     def __init__(self, html):
