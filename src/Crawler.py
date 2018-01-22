@@ -13,6 +13,15 @@ class HREFParser(HTMLParser):
     hrefs = set()
 
     def handle_starttag(self, tag, attrs):
+        """
+
+        :param tag: tagname <a>
+        :type tag: str
+        :param attrs: attributes of single tag <a href>
+        :type attrs:
+        :return: none
+        :rtype:
+        """
         if tag == 'a':
             dict_attrs = dict(attrs)
             if dict_attrs.get('href'):
@@ -20,7 +29,7 @@ class HREFParser(HTMLParser):
                 """add to dictionary all tags <a href>"""
 
 
-def get_local_links(html, domain):
+def get_links(html, domain):
     hrefs = set()
     parser = HREFParser()
     parser.feed(html)
@@ -34,14 +43,21 @@ def get_local_links(html, domain):
     return hrefs
 
 
-"""
-Class resposible for connection with database, and data transfering
-"""
+
 
 
 class Crawler_SQLite(object):
+    """
+    Class resposible for connection with database, and data transfering
+
+    """
 
     def __init__(self, db_file):
+        """
+
+        :param db_file: place to store results
+        :type db_file: sqlite3 database file
+        """
         self.conn = connect(db_file)
         c = self.conn.cursor()
         c.execute('''CREATE TABLE IF NOT EXISTS sites(domain TEXT, url TEXT, content TEXT)''')
@@ -49,6 +65,17 @@ class Crawler_SQLite(object):
         self.cursor = self.conn.cursor()
 
     def set(self, domain, url, data):
+        """
+
+        :param domain: domain
+        :type domain: str
+        :param url: url provided
+        :type url: str
+        :param data: data inserted to database
+        :type data: str
+        :return: none
+        :rtype:
+        """
         self.cursor.execute("INSERT INTO sites VALUES(?,?,?)", (domain, url, data))
         self.conn.commit()
 
@@ -120,7 +147,7 @@ class Crawler(object):
                 if url not in self.content:
                     html = self.get(url)
                     self.set(url, html)
-                    n_urls = n_urls.union(get_local_links(html, self.domain))
+                    n_urls = n_urls.union(get_links(html, self.domain))
 
             self._crawl(n_urls, max_depth - 1)
 
