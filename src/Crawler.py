@@ -37,6 +37,15 @@ class HREFParser(HTMLParser):
 
 
 def get_links(html, domain):
+    """
+
+    :param html: html addess to be parsed
+    :type html: str
+    :param domain: name of website
+    :type domain:
+    :return:
+    :rtype:
+    """
     hrefs = set()
     parser = HREFParser()
     parser.feed(html)
