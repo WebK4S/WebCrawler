@@ -8,9 +8,16 @@ from urllib.parse import urlparse
 class HREFParser(HTMLParser):
     """
     Extracting hrefs from prvided url
+    :param hrefs: set of hrefs extracted from web page
     """
 
     hrefs = set()
+
+
+    def error(self, message):
+        pass
+
+
 
     def handle_starttag(self, tag, attrs):
         """
@@ -66,7 +73,7 @@ class Crawler_SQLite(object):
 
     def set(self, domain, url, data):
         """
-
+        Seting values in database
         :param domain: domain
         :type domain: str
         :param url: url provided
